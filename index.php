@@ -62,8 +62,8 @@
                         echo '        <div class="d-flex">';
                         echo '            <div class="flex-shrink-0"><i class="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>';
                         echo '            <div class="ms-4">';
-                        echo "                <p class='mb-1'>{$entry['message']}</p>";
-                        echo "                <div class='small text-muted'>- {$entry['name']}</div>";
+                        echo "                <p class='mb-1'>{$entry['name']}</p>";
+                        echo "                <div class='small text-muted'>- {$entry['message']}</div>";
                         echo '            </div>';
                         echo '        </div>';
                         echo '    </div>';
