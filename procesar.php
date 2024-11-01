@@ -3,7 +3,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST["name"]);
-
     $message = htmlspecialchars($_POST["message"]);
 
     $filePath = 'data.json';
@@ -16,16 +15,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $newEntry = [
         'name' => $name,
- 
         'message' => $message,
     ];
     $data[] = $newEntry;
 
     file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
 
-    $_SESSION['successMessage'] = "Gracias, $name. Tu comentario ha sido recibido.";
-
-    header("Location: index.php");
+    echo json_encode([
+        "status" => "success",
+        "message" => "Gracias, $name. Tu comentario ha sido recibido.",
+        "entry" => $newEntry
+    ]);
     exit();
 }
 ?>
