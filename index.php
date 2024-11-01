@@ -28,32 +28,55 @@
         </div>
     </header>
 
-    <section class="bg-light py-5">
-        <div class="container px-5 my-5 px-5">
-            <div class="text-center mb-5">
-                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                <h2 class="fw-bolder">Ponte en contacto</h2>
-                <p class="lead mb-0">Nos encantaría saber de ti</p>
-            </div>
-            <div class="row gx-5 justify-content-center">
-                <div class="col-lg-6">
-                    <?php 
-                    include 'components/contactForm.php'; 
+<section class="bg-light py-5">
+    <div class="container px-5 my-5 px-5">
+        <div class="text-center mb-5">
+            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+            <h2 class="fw-bolder">Ponte en contacto</h2>
+            <p class="lead mb-0">Nos encantaría saber de ti</p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <?php
+                session_start();
+                
+                if (isset($_SESSION['successMessage'])) {
+                    echo '<div class="alert alert-success mt-3" role="alert">';
+                    echo $_SESSION['successMessage'];
+                    echo '</div>';
+                    unset($_SESSION['successMessage']); 
+                }
+                ?>
 
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                        $name = htmlspecialchars($_POST['name']);
-                        $email = htmlspecialchars($_POST['email']);
-                        $phone = htmlspecialchars($_POST['phone']);
-                        $message = htmlspecialchars($_POST['message']);
-                        
-                        include 'components/messageCard.php';
+                <?php include 'components/contactForm.php'; ?>
+
+                <?php
+                $filePath = 'data.json';
+                if (file_exists($filePath)) {
+                    $json = file_get_contents($filePath);
+                    $entries = json_decode($json, true);
+
+                    foreach ($entries as $entry) {
+                        echo '<div class="card mb-4 mt-3">';
+                        echo '    <div class="card-body p-4">';
+                        echo '        <div class="d-flex">';
+                        echo '            <div class="flex-shrink-0"><i class="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>';
+                        echo '            <div class="ms-4">';
+                        echo "                <p class='mb-1'>{$entry['message']}</p>";
+                        echo "                <div class='small text-muted'>- {$entry['name']}</div>";
+                        echo '            </div>';
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '</div>';
                     }
-                    ?>
-
-                </div>
+                }
+                ?>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+
 
     <?php include 'components/footer.php'; ?>
 
